@@ -157,26 +157,35 @@ for i in json_data3['birds']:
     radius.append(r)
     x = x+1
     i.update({'Origin_Dist':r})
+    i.update({'Date':date.today().strftime('%Y-%m-%d')})
+    i.update({'Time':datetime.now().strftime('%H-%M-%S')})
     
 print(max(radius))
 
+with open("sample_json.json","a+") as write_file:
+    json.dump(json_data3, write_file, indent = 4)
+
+
 #Washington-DC 2
 
-def get_data(origin):
-    x2=0
-    radius2 = []
-    dc2 = (38.910456,-76.987568)
-    for i in json_data6['birds']:
-        d2 = json_data6['birds'][x2]['location']
-        b2 = tuple(d2.values())
-        r = distance(dc2,b2).mi
-        radius2.append(r)
-        x2 = x2+1
-        i.update({'Origin Dist':r})
-        i.update({'Date':date.today().strftime('%Y-%m-%d')})
-        i.update({'Time':datetime.now().strftime('%H-%M-%S')})
+
+x2=0
+radius2 = []
+dc2 = (38.910456,-76.987568)
+for i in json_data6['birds']:
+    d2 = json_data6['birds'][x2]['location']
+    b2 = tuple(d2.values())
+    r = distance(dc2,b2).mi
+    radius2.append(r)
+    x2 = x2+1
+    i.update({'Origin Dist':r})
+    i.update({'Date':date.today().strftime('%Y-%m-%d')})
+    i.update({'Time':datetime.now().strftime('%H-%M-%S')})
 
 print(max(radius2))
+
+with open("sample_json_dc2.json","w") as write_file:
+    json.dump(json_data3, write_file, indent = 4)
 
 
 #Arlington
@@ -204,4 +213,4 @@ print("Today's date:", today)
 
 from datetime import datetime
 datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-print("Trying to append json data")
+
