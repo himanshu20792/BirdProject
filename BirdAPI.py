@@ -13,38 +13,6 @@ print(r.text)
 
 #GET request to fetch the data
 
-"""New York - Upper east side"""
-URL_get = "https://api.birdapp.com/bird/nearby?latitude=40.784652&longitude=-73.948462&radius=5000"
-loc = {"latitude":40.784652,"longitude":-73.948462,"altitude":500,"accuracy":100,"speed":-1,"heading":-1}
-headers_get = {
-"Authorization": "Bird eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBVVRIIiwidXNlcl9pZCI6IjVlYWQ2M2UyLWFiNGItNDZiYy1hNjZlLTI5N2NmNTJkM2VkMSIsImRldmljZV9pZCI6IjU0MjUzNjg1LTQ5YTAtNDhlMC1hMjM5LTc1OWU3NzYzOTUwNiIsImV4cCI6MTU5NzM2OTk2N30.hVSnrrx_adyrS2ecIyRba5E8Q-3RoylZ8WwBbqo15GY",
-"Device-id": "54253685-49a0-48e0-a239-759e77639506",
-"App-Version": "4.41.0",
-"Location":  '{"latitude":40.784652,"longitude":-73.948462,"altitude":500,"accuracy":100,"speed":-1,"heading":-1}'
-}
-rget = requests.get(URL_get, headers = headers_get, params = loc)
-rget.status_code
-rget.text
-json_data = rget.json()
-
-
-
-"""New York - Pine street(Block from Wall street)"""
-URL_get2 = "https://api.birdapp.com/bird/nearby?latitude=40.706398&longitude=-74.008065&radius=5000"
-loc2 = {"latitude":40.706398,"longitude":-74.008065,"altitude":500,"accuracy":100,"speed":-1,"heading":-1}
-headers_get2 = {
-"Authorization": "Bird eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBVVRIIiwidXNlcl9pZCI6IjVlYWQ2M2UyLWFiNGItNDZiYy1hNjZlLTI5N2NmNTJkM2VkMSIsImRldmljZV9pZCI6IjU0MjUzNjg1LTQ5YTAtNDhlMC1hMjM5LTc1OWU3NzYzOTUwNiIsImV4cCI6MTU5NzM2OTk2N30.hVSnrrx_adyrS2ecIyRba5E8Q-3RoylZ8WwBbqo15GY",
-"Device-id": "54253685-49a0-48e0-a239-759e77639506",
-"App-Version": "4.41.0",
-"Location":  '{"latitude":40.706398,"longitude":-74.008065,"altitude":500,"accuracy":100,"speed":-1,"heading":-1}'
-}
-rget2 = requests.get(URL_get2, headers = headers_get2, params = loc2)
-rget2.status_code
-rget2.text
-json_data2 = rget2.json()
-
-
-
 """Washington D.C. - George Washington University"""
 URL_get3 = "https://api.birdapp.com/bird/nearby?latitude=38.899600&longitude=-77.048820&radius=0.00001"
 loc3 = {"latitude":38.899600,"longitude":-77.04882,"altitude":500,"accuracy":100,"speed":-1,"heading":-1}
