@@ -184,7 +184,7 @@ for i in json_data6['birds']:
     r = distance(dc2,b2).mi
     radius2.append(r)
     x2 = x2+1
-    i.update({'Origin Dist':r})
+    i.update({'Origin_Dist':r})
     i.update({'Date':date.today().strftime('%Y-%m-%d')})
     i.update({'Time':datetime.now().strftime('%H-%M-%S')})
 
@@ -192,6 +192,9 @@ print(max(radius2))
 
 with open("sample_json_dc2.json","w") as write_file:
     json.dump(json_data3, write_file, indent = 4)
+
+df6 = pd.DataFrame.from_dict(json_data6['birds'], orient = 'columns')
+df6 = pd.concat([df6.drop(['location'],axis=1), df6['location'].apply(pd.Series)],axis=1)
 
 
 #Arlington
@@ -204,9 +207,13 @@ for i in json_data5['birds']:
     r = distance(dc3,b3).mi
     radius3.append(r)
     x3 = x3+1
-    i.update({'Origin Dist':r})
+    i.update({'Origin_Dist':r})
     i.update({'Date':date.today().strftime('%Y-%m-%d')})
     i.update({'Time':datetime.now().strftime('%H-%M-%S')})
+    
+df5 = pd.DataFrame.from_dict(json_data5['birds'], orient = 'columns')
+df5 = pd.concat([df5.drop(['location'],axis=1), df5['location'].apply(pd.Series)],axis=1)
+
 
 print(max(radius3))
 
@@ -219,4 +226,9 @@ datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 import time
 
-import time
+
+
+frames = [df3,df5,df6]
+df_keys = pd.concat(frames, ignore_index = True, keys=['GwU',  'Arlington', 'DC2'])
+
+df_keys['id'].nunique()
