@@ -204,4 +204,4 @@ print("Today's date:", today)
 
 from datetime import datetime
 datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-some data print("Trying to append json data sdasdasdasd")
+print("Trying to append json data sdsdsd")
