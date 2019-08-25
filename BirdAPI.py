@@ -57,7 +57,7 @@ headers_get3 = {
 rget3 = requests.get(URL_get3, headers = headers_get3, params = loc3)
 rget3.status_code
 rget3.text
-json_data3[ = rget3.json()
+json_data3 = rget3.json()
 
 
 """"To get configuration settings"""
@@ -146,6 +146,8 @@ with open("sample_json.json","w") as write_file:
 
 #George Washington Univ
 from geopy.distance import distance
+from datetime import date
+from datetime import datetime
 print(json_data3['birds'][0]['location'])
 x=0
 radius = []
@@ -159,6 +161,10 @@ for i in json_data3['birds']:
     i.update({'Origin_Dist':r})
     i.update({'Date':date.today().strftime('%Y-%m-%d')})
     i.update({'Time':datetime.now().strftime('%H-%M-%S')})
+    
+import pandas as pd
+df3 = pd.DataFrame.from_dict(json_data3['birds'], orient = 'columns')
+df3 = pd.concat([df3.drop(['location'],axis=1), df3['location'].apply(pd.Series)],axis=1)
     
 print(max(radius))
 
@@ -213,4 +219,6 @@ print("Today's date:", today)
 
 from datetime import datetime
 datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+import time
 
