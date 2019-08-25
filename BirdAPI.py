@@ -27,12 +27,10 @@ rget3.status_code
 rget3.text
 json_data3 = rget3.json()
 
-
-""""To get configuration settings"""
-URL_get4 = "https://api.birdapp.com/config/location?latitude=42.3140089&longitude=-71.2490943"
 """
+To get configuration settings
+URL_get4 = "https://api.birdapp.com/config/location?latitude=42.3140089&longitude=-71.2490943 
 loc3 = {"latitude":38.922368,"longitude":-77.019448,"altitude":500,"accuracy":100,"speed":-1,"heading":-1}
-"""
 headers_get4 = {
 "App-Version": "4.41.0"
 }
@@ -40,6 +38,7 @@ rget4 = requests.get(URL_get4, headers = headers_get4)
 rget4.status_code
 rget4.text
 json_data4 = rget4.json()
+"""
 
 
 #Putting birds values as a dataframe    
