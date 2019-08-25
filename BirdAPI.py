@@ -196,20 +196,17 @@ with open("sample_json_dc2.json","w") as write_file:
 
 #Arlington
 x3=0
-test_radius3 = []
-dc3 = (38.883694,-77.168652)
+radius3 = []
+dc3 = (38.910456,-76.987568)
 for i in json_data5['birds']:
     d3 = json_data5['birds'][x3]['location']
     b3 = tuple(d3.values())
-    print("Bike loc before append: ", b3)
-    test_radius3.append(distance(dc3,b3).mi)
-    print("Origin is: ",dc3)
-    print("Bike loc after append is: ",b3)
-    print("Radius list is: ",test_radius3)
+    r = distance(dc3,b3).mi
+    radius3.append(r)
     x3 = x3+1
-    print("x3 = ", x3)
-    if x3==4:
-        break
+    i.update({'Origin Dist':r})
+    i.update({'Date':date.today().strftime('%Y-%m-%d')})
+    i.update({'Time':datetime.now().strftime('%H-%M-%S')})
 
 print(max(radius3))
 
