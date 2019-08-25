@@ -1,5 +1,13 @@
-#POST request to get authentication token
+#Packages to be imported
 import requests
+import pandas as pd
+from geopy.distance import distance
+import json
+from datetime import date
+from datetime import datetime
+import time
+
+#POST request to get authentication token
 URL = "https://api.birdapp.com/user/login"
 email = {"email": "himanshu.agarwal20792@gmail.com"}
 headers = {"User-Agent": "Bird/4.41.0 (co.bird.Ride; build:37; iOS 12.3.1) Alamofire/4.41.0",
@@ -40,22 +48,6 @@ rget4.text
 json_data4 = rget4.json()
 """
 
-
-#Putting birds values as a dataframe    
-import pandas as pd
-df3 = pd.DataFrame.from_dict(json_data3['birds'], orient = 'columns')
-df4 = pd.concat([df3.drop(['location'],axis=1), df3['location'].apply(pd.Series)],axis=1)
-
-
-import gmaps
-gmaps.configure(api_key="AIzaSyDsWngN6Fn0rVOMClQqE21kkmhEG_z0vgM")
-locations = df4[['latitude','longitude']]
-fig = gmaps.figure()
-washington_coordinates = (38.899600,-77.04882)
-
-
-
-
 """Arlington"""
 URL_get5 = "https://api.birdapp.com/bird/nearby?latitude=38.883694&longitude=-77.168652&radius=0.00001"
 loc5 = {"latitude":38.883694,"longitude":-77.168652,"altitude":500,"accuracy":100,"speed":-1,"heading":-1}
@@ -88,34 +80,12 @@ rget6 = requests.get(URL_get6, headers = headers_get6, params = loc6)
 rget6.status_code
 rget6.text
 json_data6 = rget6.json()
-#Putting birds values as a dataframe    
-import pandas as pd
-df6 = pd.DataFrame.from_dict(json_data6['birds'], orient = 'columns')
-df6 = pd.concat([df6.drop(['location'],axis=1), df6['location'].apply(pd.Series)],axis=1)
 
-import geopy
-from geopy.distance import distance
-json_data3.birds.items()
-import pandas as pd
-df3 = pd.DataFrame.from_dict(json_data3['birds'], orient = 'columns')
-print(df3['location'].items())
 
-origin = (38.899600,-77.04882)
-for loc, coord in df3['location'].items():
-    d = distance(origin,coord)
-    print(d)
 
-import json
-with open("sample_json.json","w") as write_file:
-    json.dump(json_data3, write_file, indent = 4)
+#Finding distance of bikes from origin point and appending the values to the json data 
 
-#Finding maximum radius of bikes
-
-#George Washington Univ
-from geopy.distance import distance
-from datetime import date
-from datetime import datetime
-print(json_data3['birds'][0]['location'])
+""""George Washington Univ""""
 x=0
 radius = []
 gwu = (38.899600,-77.04882)
@@ -128,20 +98,11 @@ for i in json_data3['birds']:
     i.update({'Origin_Dist':r})
     i.update({'Date':date.today().strftime('%Y-%m-%d')})
     i.update({'Time':datetime.now().strftime('%H-%M-%S')})
-    
-import pandas as pd
-df3 = pd.DataFrame.from_dict(json_data3['birds'], orient = 'columns')
-df3 = pd.concat([df3.drop(['location'],axis=1), df3['location'].apply(pd.Series)],axis=1)
-    
+    i.update({'Origin_Loc':'DC-GWU'})
+
 print(max(radius))
 
-with open("sample_json.json","a+") as write_file:
-    json.dump(json_data3, write_file, indent = 4)
-
-
-#Washington-DC 2
-
-
+""""Washington-DC 2""""
 x2=0
 radius2 = []
 dc2 = (38.910456,-76.987568)
@@ -154,17 +115,11 @@ for i in json_data6['birds']:
     i.update({'Origin_Dist':r})
     i.update({'Date':date.today().strftime('%Y-%m-%d')})
     i.update({'Time':datetime.now().strftime('%H-%M-%S')})
+    i.update({'Origin_Loc':'DC-2'})
 
 print(max(radius2))
 
-with open("sample_json_dc2.json","w") as write_file:
-    json.dump(json_data3, write_file, indent = 4)
-
-df6 = pd.DataFrame.from_dict(json_data6['birds'], orient = 'columns')
-df6 = pd.concat([df6.drop(['location'],axis=1), df6['location'].apply(pd.Series)],axis=1)
-
-
-#Arlington
+"""Arlington""""
 x3=0
 radius3 = []
 dc3 = (38.910456,-76.987568)
@@ -177,25 +132,42 @@ for i in json_data5['birds']:
     i.update({'Origin_Dist':r})
     i.update({'Date':date.today().strftime('%Y-%m-%d')})
     i.update({'Time':datetime.now().strftime('%H-%M-%S')})
-    
-df5 = pd.DataFrame.from_dict(json_data5['birds'], orient = 'columns')
-df5 = pd.concat([df5.drop(['location'],axis=1), df5['location'].apply(pd.Series)],axis=1)
+    i.update({'Origin_Loc':'Arlington'})
 
 
 print(max(radius3))
 
-from datetime import date
-today = date.today()
-print("Today's date:", today)
+#Creating a dataframe for data received from each origin point    
+"""George Washington Univ"""
+df3 = pd.DataFrame.from_dict(json_data3['birds'], orient = 'columns')
+df3 = pd.concat([df3.drop(['location'],axis=1), df3['location'].apply(pd.Series)],axis=1)
 
-from datetime import datetime
-datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+"""Washington-DC 2"""
+df6 = pd.DataFrame.from_dict(json_data6['birds'], orient = 'columns')
+df6 = pd.concat([df6.drop(['location'],axis=1), df6['location'].apply(pd.Series)],axis=1)
 
-import time
+"""Arlington"""
+df5 = pd.DataFrame.from_dict(json_data5['birds'], orient = 'columns')
+df5 = pd.concat([df5.drop(['location'],axis=1), df5['location'].apply(pd.Series)],axis=1)
 
 
-
+#Combining dataframes from the three origin points
 frames = [df3,df5,df6]
-df_keys = pd.concat(frames, ignore_index = True, keys=['GwU',  'Arlington', 'DC2'])
+df_keys = pd.concat(frames, ignore_index = True)
+df_keys['id'].nunique() #To find how many unique birds we retrieved.
 
-df_keys['id'].nunique()
+
+#Creating a JSON File (If needed)
+with open("sample_json.json","a+") as write_file:  #This command is used to append new data to existing file
+    json.dump(json_data3, write_file, indent = 4)
+
+with open("sample_json.json","w") as write_file: #This command just overwrites new data to existing file
+    json.dump(json_data3, write_file, indent = 4)
+
+
+#Mapping of birds on Google Maps (Works in Jupyter Notebook)
+import gmaps
+gmaps.configure(api_key="AIzaSyDsWngN6Fn0rVOMClQqE21kkmhEG_z0vgM")
+locations = df4[['latitude','longitude']]
+fig = gmaps.figure()
+washington_coordinates = (38.899600,-77.04882)
