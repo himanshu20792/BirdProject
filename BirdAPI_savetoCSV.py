@@ -1,3 +1,4 @@
+
 #Packages to be imported
 import requests
 import pandas as pd
@@ -20,6 +21,7 @@ r.status_code
 print(r.text)
 
 #GET request to fetch the data
+
 
 """Washington D.C. - George Washington University"""
 URL_get3 = "https://api.birdapp.com/bird/nearby?latitude=38.899600&longitude=-77.048820&radius=0.00001"
@@ -85,7 +87,7 @@ json_data6 = rget6.json()
 
 #Finding distance of bikes from origin point and appending the values to the json data 
 
-""""George Washington Univ""""
+"""George Washington Univ"""
 x=0
 radius = []
 gwu = (38.899600,-77.04882)
@@ -102,7 +104,7 @@ for i in json_data3['birds']:
 
 print(max(radius))
 
-""""Washington-DC 2""""
+"""Washington-DC 2"""
 x2=0
 radius2 = []
 dc2 = (38.910456,-76.987568)
@@ -119,7 +121,7 @@ for i in json_data6['birds']:
 
 print(max(radius2))
 
-"""Arlington""""
+"""Arlington"""
 x3=0
 radius3 = []
 dc3 = (38.910456,-76.987568)
@@ -156,13 +158,19 @@ frames = [df3,df5,df6]
 df_keys = pd.concat(frames, ignore_index = True)
 df_keys['id'].nunique() #To find how many unique birds we retrieved.
 
-
+"""
 #Creating a JSON File (If needed)
 with open("sample_json.json","a+") as write_file:  #This command is used to append new data to existing file
     json.dump(json_data3, write_file, indent = 4)
 
 with open("sample_json.json","w") as write_file: #This command just overwrites new data to existing file
     json.dump(json_data3, write_file, indent = 4)
+"""
+
+#Exporting DataFrame to CSV
+export_csv = df_keys.to_csv(r'/Users/himanshuagarwal/BirdProject/BirdData3.csv', index = None, mode = 'a', header=True) #Don't forget to add '.csv' at the end of the path
+export_csv = df_keys.to_csv(r'/Users/himanshuagarwal/BirdProject/BirdData.csv', index = None, mode = 'a', header=True) #Don't forget to add '.csv' at the end of the path
+
 
 
 #Mapping of birds on Google Maps (Works in Jupyter Notebook)
@@ -171,3 +179,5 @@ gmaps.configure(api_key="AIzaSyDsWngN6Fn0rVOMClQqE21kkmhEG_z0vgM")
 locations = df4[['latitude','longitude']]
 fig = gmaps.figure()
 washington_coordinates = (38.899600,-77.04882)
+
+    
