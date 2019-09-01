@@ -1,12 +1,15 @@
-import geopy
-from geopy.distance import VincentyDistance
-from geopy.distance import distance
+#Packages to be imported
 import requests
-# given: lat1, lon1, b = bearing in degrees, d = distance in kilometers
+import pandas as pd
+from geopy.distance import distance
+import json
+from datetime import date
+from datetime import datetime
+import time
 
+#Loop to get all coordinate points
 dest= []
 origin = geopy.Point(38.95026, -77.09355)
-
 for i in range(1,8):
     for j in range(1,8):
         destination = VincentyDistance(miles=j).destination(origin, 180)
@@ -16,9 +19,14 @@ for i in range(1,8):
     """destination = VincentyDistance(miles=i).destination(origin, 180)"""
     origin_horizontal_lat, origin_horizontal_lon = origin_horizontal.latitude, origin_horizontal.longitude
     origin = (origin_horizontal_lat,origin_horizontal_lon)
-   
-    
 
+
+#Automation of data extraction
+for i in range(1,1009):
+    get_birds(dest)
+    time.sleep(600)
+
+#Function to get data for a coordinate, add date and time values and then export it. 
 def get_birds(dest):
     df4 = []
     for idx,c in enumerate(dest):
@@ -43,6 +51,5 @@ def get_birds(dest):
         df3 = pd.concat([df3.drop(['location'],axis=1), df3['location'].apply(pd.Series)],axis=1)
         df4.append(df3)
         df99 = pd.concat(df4,ignore_index=True)
-        
     #Export to CSV
     df99.to_csv(r'/Users/himanshuagarwal/BirdProject/BirdData-Test4-49coor.csv', index = None, mode = 'a', header=True) #Don't forget to add '.csv' at the end of the path
