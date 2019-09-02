@@ -66,6 +66,6 @@ def get_birds(dest,z2):
         df99.to_csv(r'/Users/himanshuagarwal/BirdProject/BirdData-Test4-49coor-'+str(start_date_string)+'.csv', index = None, mode = 'a', header=True) #Don't forget to add '.csv' at the end of the pat
 
 #Automation of data extraction
-for z in range(1,3):
+for z in range(1,2017):
     get_birds(dest,z)
-    time.sleep(30)
+    time.sleep(300)
