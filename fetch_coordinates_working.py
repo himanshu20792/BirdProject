@@ -69,3 +69,29 @@ def get_birds(dest,z2):
 for z in range(1,3):
     get_birds(dest,z)
     time.sleep(30)
+    
+json_data889 = get_jsondata(38.95026, -77.09355)
+for x,i in enumerate(json_data889['birds']):
+            d = json_data889['birds'][x]['location']
+            b = tuple(d.values())
+            r = distance((38.95026, -77.09355),b).mi
+            i.update({'Origin_Dist':r})
+            i.update({'Date':date.today().strftime('%Y-%m-%d')})
+            i.update({'Time':datetime.now().strftime('%H:%M:%S')})
+            """i.update({'Origin_Loc':'DC-GWU'})"""
+
+#One solution
+json_data889
+df889 = pd.DataFrame.from_dict(json_data889['birds'], orient = 'columns')
+df889 = df889[['id','code','model','captive','nest_id','battery_level','estimated_range','Origin_Dist','Date','Time','location']]
+df889 = pd.concat([df889.drop(['location'],axis=1), df889['location'].apply(pd.Series)],axis=1)
+
+#Second solution
+from collections import OrderedDict
+json_data890 = OrderedDict(json_data889)
+df890 = pd.DataFrame.from_dict(json_data890['birds'], orient = 'columns')
+df889 = df889[['id','code','model','captive','nest_id','battery_level','estimated_range','Origin_Dist','Date','Time','location']]
+df889 = pd.concat([df889.drop(['location'],axis=1), df889['location'].apply(pd.Series)],axis=1)
+
+
+df889.head(25)
