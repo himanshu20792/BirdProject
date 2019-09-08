@@ -1,12 +1,20 @@
-import geopy
-from geopy.distance import VincentyDistance
-from geopy.distance import distance
+#Packages to be imported
 import requests
-# given: lat1, lon1, b = bearing in degrees, d = distance in kilometers
+import pandas as pd
+import math
+import numpy as np
+import geopy
+from geopy.distance import distance
+from geopy.distance import VincentyDistance
+import json
+from datetime import date, datetime, timedelta
+import datetime as dt
+import time
+from functions_file import get_jsondata
 
+#Loop to get all coordinate points
 dest= []
 origin = geopy.Point(38.95026, -77.09355)
-
 for i in range(1,8):
     for j in range(1,8):
         destination = VincentyDistance(miles=j).destination(origin, 180)
@@ -16,15 +24,19 @@ for i in range(1,8):
     """destination = VincentyDistance(miles=i).destination(origin, 180)"""
     origin_horizontal_lat, origin_horizontal_lon = origin_horizontal.latitude, origin_horizontal.longitude
     origin = (origin_horizontal_lat,origin_horizontal_lon)
-   
-    
 
-def get_birds(dest):
+
+#Function to get data for a coordinate, add date and time values and then export it. 
+
+start_date= dt.date(2019,9,2)
+start_date_string = start_date.strftime("%m-%d-%Y")
+
+def get_birds(dest,z2):
+    global start_date, start_date_string
     df4 = []
     for idx,c in enumerate(dest):
         latitude = c[0]
         longitude = c[1]
-        print(idx, '\n')
         json_data99 = get_jsondata(latitude,longitude)
         radius = []
         #To add Date, Time, Distance from origin, Origin-LOC
@@ -43,6 +55,17 @@ def get_birds(dest):
         df3 = pd.concat([df3.drop(['location'],axis=1), df3['location'].apply(pd.Series)],axis=1)
         df4.append(df3)
         df99 = pd.concat(df4,ignore_index=True)
-        
     #Export to CSV
-    df99.to_csv(r'/Users/himanshuagarwal/BirdProject/BirdData-Test4-49coor.csv', index = None, mode = 'a', header=True) #Don't forget to add '.csv' at the end of the path
+    df99 = df99.drop_duplicates(subset='id')
+    today = date.today().strftime("%m-%d-%Y")
+    if today == start_date_string:
+        df99.to_csv(r'/Users/himanshuagarwal/BirdProject/BirdData-Test4-49coor-'+str(start_date_string)+'.csv', index = None, mode = 'a', header=True) #Don't forget to add '.csv' at the end of the path
+    elif today > start_date_string:
+        start_date = start_date + timedelta(days=1)
+        start_date_string = start_date.strftime("%m-%d-%Y")
+        df99.to_csv(r'/Users/himanshuagarwal/BirdProject/BirdData-Test4-49coor-'+str(start_date_string)+'.csv', index = None, mode = 'a', header=True) #Don't forget to add '.csv' at the end of the pat
+
+#Automation of data extraction
+for z in range(1,2017):
+    get_birds(dest,z)
+    time.sleep(300)
