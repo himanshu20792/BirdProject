@@ -117,14 +117,59 @@ plt.title('k-means clustering results (n_clusters=10)', fontsize=14)
 plt.grid()
 plt.show()
 
-import folium
 
-m = folium.Map(location=[45.5236, -122.6750])
-m
+def get_scoots(date):
+    global df_morning
+    df_morning, df_evening = pd.DataFrame()
+    df_morning = df.loc[((df['date_time']>= ''+str(date)+' 07:00:00')&(df['date_time']<= ''+str(date)+' 07:15:00'))]
+
+df_morning, df_evening = pd.DataFrame()
+
+get_scoots('2019-10-1')
 
 
+def get_statscoots(date):
+    ##Fetching scooter data in the morning between 7 to 7.15am and in the night between 11.45 to 11.59pm
+    global df_morning, df_evening, StatScoots
+    df_morning = pd.DataFrame()
+    df_evening = pd.DataFrame()
+    df_morning = df.loc[((df['date_time']>= ''+str(date)+' 07:00:00')&(df['date_time']<= ''+str(date)+' 07:15:00'))]
+    df_evening = df.loc[((df['date_time']>= ''+str(date)+' 23:45:00')&(df['date_time']<= ''+str(date)+' 23:59:00'))]
+    df_morning = df_morning.reset_index(drop=True)
+    df_evening = df_evening.reset_index(drop=True)
+    ##Totscoots is all the unique scooter ids present in the above timeframe
+    TotScootsUUID = []; TotScootsUUID= df_morning['id'].unique().tolist()
+    ##To convert the format of ids from UUID in TotScootsUUID to strings in TotScoots
+    TotScoots = []
+    for i,n in enumerate(TotScootsUUID):
+        a = TotScootsUUID[i].urn.split(':')
+        TotScoots.append(a[2])
+    ##Converting latitude and longitude columns to tuples
+    df_morning['lats_tups'] = list(zip(df_morning['latitude'],df_morning['longitude']))
+    df_evening['lats_tups'] = list(zip(df_evening['latitude'],df_evening['longitude']))
+    #To make a dataframe 'lats' containing information of scooter ids and if had the
+    #same coordinate throughout the day.
+    df_morning['id'] = df_morning['id'].astype(str)
+    df_evening['id'] = df_evening['id'].astype(str)
+    lats = pd.DataFrame(columns=['id','Count of lats'])
+    lens = []
+    for i,n in enumerate(TotScoots):
+        lens.append(n)
+        lens.append(df_evening.loc[(df_evening['id']== n,'lats_tups')].nunique())
+        lats = lats.append({'id':lens[0],'Count of lats':lens[1]},ignore_index=True)
+        lens = []
+    #No. of stationary scooters for 10/1:
+    StatScoots = pd.DataFrame(columns=['date','id'])
+    StatScootsList = lats.loc[(lats['Count of lats']==1,'id')].tolist()
+    StatScoots = StatScoots.append([{'id': i, 'date':date} for i in StatScootsList],ignore_index=True)
+    StatScoots['date'] = pd.to_datetime(StatScoots.date)
 
+get_statscoots('2019-10-3')
+StatScoots['date'] = pd.to_datetime(StatScoots.date)
 
+times = pd.date_range('2012-09-03', periods=289, freq='1440min')
+dates = pd.date_range(start='2019-09-03', end='2019-10-19')
+dates = dates.strftime('%Y-%m-%d')
 
 
 
