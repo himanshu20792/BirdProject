@@ -5,3 +5,5 @@ visualizing their movements through various times of a day. This unsupervised le
 of scooter location data which required converting it to trips data. We consider various models for clustering, and visulaize the movements and clusters through geoplots. 
 
 ![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+
+![alt text](https://github.com/himanshu20792/BirdProject/tree/master/StationaryScooters/Images/)
