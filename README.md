@@ -10,4 +10,5 @@ visualizing their movements through various times of a day. This unsupervised le
 
 
 **Heatmap of scooters with Cluster centers:**
+
 <img src="https://github.com/himanshu20792/BirdProject/blob/master/StationaryScooters/Images/Stationary_Scooters_Cluster.png" width="600" >
