@@ -3,3 +3,5 @@
 Exploring the usage of scooters around Washington D.C. region by geo-clustering scooters based on their locations and 
 visualizing their movements through various times of a day. This unsupervised learning problem is set with over 8M observations
 of scooter location data which required converting it to trips data. We consider various models for clustering, and visulaize the movements and clusters through geoplots. 
+
+![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
