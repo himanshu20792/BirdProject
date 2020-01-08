@@ -37,6 +37,10 @@ In depth description of my analysis can be found on my blogpost. (link to my blo
 ### Interesting conclusion:
 While I go over all my conclusions in my blog, I want to point out to one that really suprised me. 
 ##### " Scooters seem for recreational purposes and so should mostly be used on the weekends. Right?" #####
+<img src="https://github.com/himanshu20792/BirdProject/blob/master/StationaryScooters/Images/Weekend_weekday_1.png" width="600" >
+
+<img src="https://github.com/himanshu20792/BirdProject/blob/master/StationaryScooters/Images/Weekend_weekday_2.png" width="600" >
+
 
 
 
