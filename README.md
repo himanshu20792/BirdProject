@@ -26,7 +26,7 @@ The code was written in Python 3 and uses the following packages: pandas, numpy,
 ### Data collection & preparation:
 - In order to capture movements, I needed to collect scooter data at frequent intervals. Developed a script that pinged the API every 5 mins for multiple coordinate points for 45 days straight resulting in about ~8M observations.  
 API: https://github.com/ubahnverleih/WoBike/blob/master/Bird.md
-- Data was initially collected as CSVs, but managing such numerous CSVs became really cumbersome. So I improved upon the above script to start exporting the collected data to a PostgreSQL database using the sqlalchemy package.
+- Data was initially collected as CSVs, but managing numerous CSVs became really cumbersome. So I improved upon the above script to start exporting the collected data to a PostgreSQL database using the sqlalchemy package.
 - The data collected required extensive cleaning and preparation that I wouldnt go into too much detail here, but you can find an in-depth explanation of my whole project here (link to my blogpost)
 
 ### Analysis:
@@ -34,7 +34,9 @@ After collection and preparation of data, I performed some exploratory data anal
 
 In depth description of my analysis can be found on my blogpost. (link to my blog post)
 
-### Conclusions:
+### Interesting conclusion:
+While I go over all my conclusions in my blog, I want to point out to one that really suprised me. 
+##### " Scooters seem for recreational purposes and so should mostly be used on the weekends. Right?" #####
 
 
 
@@ -47,9 +49,3 @@ In depth description of my analysis can be found on my blogpost. (link to my blo
 **Heatmap of scooters and Cluster centers:**
 
 <img src="https://github.com/himanshu20792/BirdProject/blob/master/StationaryScooters/Images/Stationary_Scooters_Cluster.png" width="600" >
-
-## Interesting things discovered:
-
-## 
-
-## Conclusions:
