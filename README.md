@@ -43,9 +43,8 @@ While I go over all my conclusions in my blog, I want to point out to one that r
 
 <img src="https://github.com/himanshu20792/BirdProject/blob/master/StationaryScooters/Images/Weekend_weekday_2.png" width="600" >
 
-<p>&nbsp;</p>
 To my surprise, there was more activity on weekdays than on weekends. This might indicate that people are using scooters more for everyday commute than for recreational purposes. That would make sense considering the busy nature of traffic in DC. 
-
+<p>&nbsp;</p>
 
 **Visualization of select scooters movements:**
 
